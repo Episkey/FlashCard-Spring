@@ -17,7 +17,7 @@ public class Flashcard {
 
     private String answer;
 
-    private Boolean learned;
+    private boolean learned;
 
     @ManyToOne
     @JoinColumn(nullable = false)
@@ -60,19 +60,19 @@ public class Flashcard {
         this.answer = answer;
     }
 
-    public Boolean getLearned() {
-        return learned;
-    }
-
-    public void setLearned(Boolean learned) {
-        this.learned = learned;
-    }
-
     public User getUser() {
         return user;
     }
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public boolean isLearned() {
+        return learned;
+    }
+
+    public void setLearned(boolean learned) {
+        this.learned = learned;
     }
 }

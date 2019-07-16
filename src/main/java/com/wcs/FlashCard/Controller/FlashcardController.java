@@ -30,7 +30,7 @@ public class FlashcardController {
 
     @PostMapping("/user/{userId}/flashcards")
     public Flashcard create(@PathVariable Long userId,
-                          @RequestBody Flashcard picture) {
+                            @RequestBody Flashcard picture) {
         User user = userRepository.findById(userId).get();
         picture.setUser(user);
         return flashcardRepository.save(picture);
@@ -38,7 +38,7 @@ public class FlashcardController {
 
     @PutMapping("/flashcards/{flashcardId}")
     public Flashcard update(@PathVariable Long flashcardId,
-                          @RequestBody Flashcard flashcard) {
+                            @RequestBody Flashcard flashcard) {
         Flashcard flashcardToUpdate = flashcardRepository.findById(flashcardId).get();
         if (flashcard.getName() != null) {
             flashcardToUpdate.setName(flashcard.getName());

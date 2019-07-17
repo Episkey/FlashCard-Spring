@@ -1,5 +1,6 @@
 package com.wcs.FlashCard.Controller;
 
+import com.wcs.FlashCard.Model.Authentication;
 import com.wcs.FlashCard.Model.User;
 import com.wcs.FlashCard.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,5 +32,19 @@ public class UserController {
             userToUpdate.setMail(user.getMail());
         }
         return userRepository.save(userToUpdate);
+    }
+
+    @PostMapping("/users/search")
+    public Authentication search(@RequestBody User user) {
+        Authentication authentication = new Authentication();
+        User userFromDb = userRepository.findUserByMail(user.getMail());
+        if (userFromDb == null) {
+            authentication.setError("ERROR_EMAIL");
+        } else if (!user.getPassword().equals(userFromDb.getPassword())) {
+            authentication.setError("ERROR_PASSWORD");
+        } else {
+            authentication.setUser(userFromDb);
+        }
+        return authentication;
     }
 }

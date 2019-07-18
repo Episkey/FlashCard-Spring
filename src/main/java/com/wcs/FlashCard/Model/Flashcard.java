@@ -17,6 +17,10 @@ public class Flashcard {
 
     private String answer;
 
+    private String general;
+
+    private String code;
+
     private boolean learned;
 
     @ManyToOne
@@ -74,5 +78,21 @@ public class Flashcard {
 
     public void setLearned(boolean learned) {
         this.learned = learned;
+    }
+
+    public String getGeneral() {
+        return general;
+    }
+
+    public void setGeneral(String general) {
+        this.general = general;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
     }
 }

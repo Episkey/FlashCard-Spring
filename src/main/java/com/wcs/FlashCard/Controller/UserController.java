@@ -1,9 +1,12 @@
 package com.wcs.FlashCard.Controller;
 
+import com.wcs.FlashCard.Model.Authentication;
 import com.wcs.FlashCard.Model.User;
 import com.wcs.FlashCard.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 public class UserController {
@@ -14,6 +17,11 @@ public class UserController {
     @GetMapping("/users/{userId}")
     public User read(@PathVariable Long userId) {
         return userRepository.findById(userId).get();
+    }
+
+    @GetMapping("/users")
+    public List<User> read() {
+        return userRepository.findAll();
     }
 
     @PostMapping("/users")
@@ -31,5 +39,19 @@ public class UserController {
             userToUpdate.setMail(user.getMail());
         }
         return userRepository.save(userToUpdate);
+    }
+
+    @PostMapping("/users/search")
+    public Authentication search(@RequestBody User user) {
+        Authentication authentication = new Authentication();
+        User userFromDb = userRepository.findUserByMail(user.getMail());
+        if (userFromDb == null) {
+            authentication.setError("ERROR_EMAIL");
+        } else if (!user.getPassword().equals(userFromDb.getPassword())) {
+            authentication.setError("ERROR_PASSWORD");
+        } else {
+            authentication.setUser(userFromDb);
+        }
+        return authentication;
     }
 }

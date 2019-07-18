@@ -28,7 +28,7 @@ public class FlashcardController {
         return flashcardRepository.findById(flashcardId).get();
     }
 
-    @PostMapping("/user/{userId}/flashcards")
+    @PostMapping("/users/{userId}/flashcards")
     public Flashcard create(@PathVariable Long userId,
                             @RequestBody Flashcard picture) {
         User user = userRepository.findById(userId).get();
@@ -49,7 +49,12 @@ public class FlashcardController {
         if (flashcard.getAnswer() != null) {
             flashcardToUpdate.setAnswer(flashcard.getAnswer());
         }
+        if (flashcard.getGeneral() != null) {
+            flashcardToUpdate.setGeneral(flashcard.getGeneral());
+        }
+        if (flashcard.getCode() != null) {
+            flashcardToUpdate.setCode(flashcard.getCode());
+        }
         return flashcardRepository.save(flashcardToUpdate);
     }
-
 }
